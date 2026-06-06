@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>משימה מיוחדת</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #fff5f5;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #d6336c;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            background: #d6336c;
+            color: white;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>ברוכה הבאה למשימה של מירו 🐶</h1>
+
+    <p>
+        לפני שממשיכים, שאלה חשובה:
+    </p>
+
+    <p>
+        איפה הייתה החופשה הראשונה שלנו?
+    </p>
+
+    <button onclick="showNext()">סיציליה</button>
+
+    <div id="next" class="hidden">
+        <h2>נכון! 🎉</h2>
+
+        <p>
+            עכשיו לכי למטבח וחפשי את הרמז הבא...
+        </p>
+    </div>
+
+    <script>
+        function showNext() {
+            document.getElementById("next").classList.remove("hidden");
+        }
+    </script>
+
+</body>
+</html>
