@@ -1,64 +1,246 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>משימה מיוחדת</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>המשימה של מירו</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background: #fff5f5;
-            padding: 30px;
-        }
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #fff1f5, #fffaf0);
+      color: #222;
+      text-align: center;
+    }
 
-        h1 {
-            color: #d6336c;
-        }
+    .screen {
+      display: none;
+      min-height: 100vh;
+      padding: 30px 20px;
+      box-sizing: border-box;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
 
-        button {
-            padding: 15px 30px;
-            font-size: 18px;
-            border: none;
-            border-radius: 10px;
-            background: #d6336c;
-            color: white;
-            cursor: pointer;
-        }
+    .screen.active {
+      display: flex;
+    }
 
-        .hidden {
-            display: none;
-        }
-    </style>
+    .card {
+      background: white;
+      border-radius: 24px;
+      padding: 25px;
+      max-width: 430px;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    }
+
+    h1, h2 {
+      color: #c9184a;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 18px;
+      margin: 15px 0;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      margin: 12px 0;
+      padding: 15px;
+      font-size: 18px;
+      border: none;
+      border-radius: 14px;
+      background: #c9184a;
+      color: white;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: #f8bbd0;
+      color: #222;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      font-size: 18px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .small {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .error {
+      color: #c9184a;
+      font-weight: bold;
+    }
+
+    .final {
+      font-size: 42px;
+      color: #c9184a;
+      animation: pop 1s ease;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+  </style>
 </head>
+
 <body>
 
-    <h1>ברוכה הבאה למשימה של מירו 🐶</h1>
-
-    <p>
-        לפני שממשיכים, שאלה חשובה:
-    </p>
-
-    <p>
-        איפה הייתה החופשה הראשונה שלנו?
-    </p>
-
-    <button onclick="showNext()">סיציליה</button>
-
-    <div id="next" class="hidden">
-        <h2>נכון! 🎉</h2>
-
-        <p>
-            עכשיו לכי למטבח וחפשי את הרמז הבא...
-        </p>
+  <!-- מסך פתיחה -->
+  <div class="screen active" id="screen1">
+    <div class="card">
+      <h1>שלום אמא 🐶</h1>
+      <img src="images/miro.jpg" alt="מירו">
+      <p>אבא ביקש ממני להעביר לך משימה חשובה מאוד.</p>
+      <p class="small">רמז: כדאי לשתף פעולה.</p>
+      <button onclick="goTo('screen2')">אני מוכנה</button>
     </div>
+  </div>
 
-    <script>
-        function showNext() {
-            document.getElementById("next").classList.remove("hidden");
-        }
-    </script>
+  <!-- שאלת בחירה -->
+  <div class="screen" id="screen2">
+    <div class="card">
+      <h2>שאלה ראשונה</h2>
+      <p>מי הכי מתרגש עכשיו?</p>
+
+      <button onclick="answerQuestion('נכון ברור שמירו')">מירו</button>
+      <button onclick="answerQuestion('גם נכון 😄')">את</button>
+      <button onclick="answerQuestion('הכי נכון ❤️')">אבא</button>
+
+      <p id="answerText"></p>
+      <button id="nextAfterQuestion" style="display:none" onclick="goTo('screen3')">
+        המשך
+      </button>
+    </div>
+  </div>
+
+  <!-- מסך תמונה/זיכרון -->
+  <div class="screen" id="screen3">
+    <div class="card">
+      <h2>זיכרון קטן</h2>
+      <img src="images/photo1.jpg" alt="תמונה שלנו">
+      <p>
+        כאן תכתוב משהו אישי על תמונה שלכם.
+        למשל: "אחד הימים שהבנתי כמה כיף לי איתך."
+      </p>
+      <button onclick="goTo('screen4')">המשך למשימה הבאה</button>
+    </div>
+  </div>
+
+  <!-- חידה פיזית בבית -->
+  <div class="screen" id="screen4">
+    <div class="card">
+      <h2>משימה בבית</h2>
+      <p>לכי למקום שבו אנחנו מתחילים כמעט כל בוקר.</p>
+      <p style="font-size:40px;">☕</p>
+      <p class="small">שם יחכה לך קוד קטן.</p>
+      <button onclick="goTo('screen5')">מצאתי את הקוד</button>
+    </div>
+  </div>
+
+  <!-- הכנסת קוד -->
+  <div class="screen" id="screen5">
+    <div class="card">
+      <h2>הכניסי את הקוד</h2>
+      <p>הקוד שחיכָה לך ליד הקפה:</p>
+
+      <input id="secretCode" placeholder="הכניסי קוד כאן">
+
+      <button onclick="checkCode()">בדיקה</button>
+
+      <p id="codeError" class="error"></p>
+
+      <p class="small">כרגע הקוד הוא: 2711. אפשר לשנות אותו בקוד.</p>
+    </div>
+  </div>
+
+  <!-- עוד שאלה -->
+  <div class="screen" id="screen6">
+    <div class="card">
+      <h2>עוד שאלה חשובה</h2>
+      <p>מה מירו היה מבקש עכשיו?</p>
+
+      <button onclick="goTo('screen7')">חטיף</button>
+      <button onclick="goTo('screen7')">עוד חטיף</button>
+      <button onclick="goTo('screen7')">את כל החטיפים בבית</button>
+    </div>
+  </div>
+
+  <!-- סרטון -->
+  <div class="screen" id="screen7">
+    <div class="card">
+      <h2>מסר קטן ממני</h2>
+
+      <!-- שים קובץ video.mp4 בתוך תיקיית videos -->
+      <video controls width="100%">
+        <source src="videos/video.mp4" type="video/mp4">
+        הדפדפן לא תומך בסרטון.
+      </video>
+
+      <button onclick="goTo('screen8')">המשך</button>
+    </div>
+  </div>
+
+  <!-- מסך לפני הסיום -->
+  <div class="screen" id="screen8">
+    <div class="card">
+      <h2>כמעט סיימנו</h2>
+      <p>
+        בית זה לא מקום.
+        <br><br>
+        בית זה האדם שחוזרים אליו.
+      </p>
+      <button onclick="goTo('screen9')">המשך</button>
+    </div>
+  </div>
+
+  <!-- מסך סיום -->
+  <div class="screen" id="screen9">
+    <div class="card">
+      <h1 class="final">התנשאי לי? ❤️</h1>
+      <img src="images/final.jpg" alt="תמונה אחרונה">
+    </div>
+  </div>
+
+  <script>
+    function goTo(screenId) {
+      const screens = document.querySelectorAll('.screen');
+      screens.forEach(screen => screen.classList.remove('active'));
+      document.getElementById(screenId).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function answerQuestion(text) {
+      document.getElementById('answerText').innerText = text;
+      document.getElementById('nextAfterQuestion').style.display = 'block';
+    }
+
+    function checkCode() {
+      const correctCode = "2711"; // שנה כאן את הקוד
+      const userCode = document.getElementById('secretCode').value.trim();
+
+      if (userCode === correctCode) {
+        goTo('screen6');
+      } else {
+        document.getElementById('codeError').innerText = "לא בדיוק... נסי שוב 😄";
+      }
+    }
+  </script>
 
 </body>
 </html>
