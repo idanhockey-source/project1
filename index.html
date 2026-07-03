@@ -124,9 +124,9 @@
     <div class="card center-panel">
       <div id="final-question">
         <div class="final-heart">💍</div>
-        <div class="final-title">ענית... עברת את החידון בהצטיינות. נשארה רק שאלה אחת.</div>
-        <p>רציתי לשאול אותך משהו, ולא בתור חידה הפעם.</p>
-        <div class="final-title" style="font-size:clamp(24px,5.5vw,32px)">תתחתני איתי?</div>
+        <div class="final-title">לא רע לא רע, עכשיו בארון מעל המכונת כביסה מצד ימין יש קופסא, תוציאי אותה. תפתחי</div>
+        <p></p>
+        <div class="final-title" style="font-size:clamp(24px,5.5vw,32px)">אהבת אותה?</div>
         <div class="yn-wrap">
           <button class="yes-btn" onclick="sayYes()">כן! 💖</button>
           <button class="no-btn" id="no-btn">לא</button>
@@ -134,8 +134,8 @@
       </div>
       <div class="yes-screen" id="yes-screen">
         <div class="final-heart">🎉</div>
-        <div class="final-title">ידעתי שתגידי כן. אני אוהב אותך.</div>
-        <p>עכשיו בואי הנה, יש לי טבעת בשבילך.</p>
+        <div class="final-title">אווו אהבה שלי ידעתי שתאהבי!</div>
+        <p></p>
       </div>
     </div>
   </div>
@@ -146,7 +146,7 @@
 <button class="music-btn" id="music-btn" title="השיר שלנו">🎵</button>
 
 <script>
-const QUESTIONS = [{"images":["C:\\Users\\IDANCE\\Documents\\work\\Blender\\photos\\pic_1.JPEG","C:\\Users\\IDANCE\\Documents\\work\\Blender\\photos\\pic_2.JPEG"],"question":"מה היה תאריך הנשיקה הראשונה?","options":["28/11/24","30/11/24","01/12/24"],"correct":2,"dodge":false,"dodgeIndex":-1},{"images":["C:\\Users\\IDANCE\\Documents\\work\\Blender\\photos\\pic_3.JPEG","C:\\Users\\IDANCE\\Documents\\work\\Blender\\photos\\pic_4.JPEG","C:\\Users\\IDANCE\\Documents\\work\\Blender\\photos\\pic_5.JPEG"],"question":"מה המסע הכי קשה שהעברתי אותך?","options":["שיט 13 שעות","טיול לראש ההר","צחצוח שיניים כל לילה"],"correct":2,"dodge":false,"dodgeIndex":-1},{"images":["C:\\Users\\IDANCE\\Documents\\work\\Blender\\photos\\pic_6.JPEG","C:\\Users\\IDANCE\\Documents\\work\\Blender\\photos\\pic_7.JPEG","C:\\Users\\IDANCE\\Documents\\work\\Blender\\photos\\pic_8.JPEG"],"question":"הטירמיסו הכי טעים שאכלנו:","options":["באיטליה, בעיר שממנה יצאנו לשיט","בירושלים","שלך❤ "],"correct":0,"dodge":false,"dodgeIndex":-1},{"images":["C:\\Users\\IDANCE\\Documents\\work\\Blender\\photos\\pic_9.JPEG","C:\\Users\\IDANCE\\Documents\\work\\Blender\\photos\\pic_10.JPEG","C:\\Users\\IDANCE\\Documents\\work\\Blender\\photos\\pic_11.JPEG"],"question":"כמה מירו השתתף איתי בעלויות הטבעת?","options":["25%","50%"," לא אכל אותה שכשנתתי לו לראות "],"correct":2,"dodge":false,"dodgeIndex":-1},{"images":["C:\\Users\\IDANCE\\Documents\\work\\Blender\\photos\\pic_12.JPEG","C:\\Users\\IDANCE\\Documents\\work\\Blender\\photos\\pic_13.JPEG"],"question":"האם אנחנו צריכים להחזיר את מירו לדעתך?","options":["כן","לא"],"correct":0,"dodge":true,"dodgeIndex":1}];
+const QUESTIONS = [{"images":["photos\\pic_1.JPEG","photos\\pic_2.JPEG"],"question":"מה היה תאריך הנשיקה הראשונה?","options":["28/11/24","30/11/24","01/12/24"],"correct":2,"dodge":false,"dodgeIndex":-1},{"images":["photos\\pic_3.JPEG","photos\\pic_4.JPEG","photos\\pic_5.JPEG"],"question":"מה המסע הכי קשה שהעברתי אותך?","options":["שיט 13 שעות","טיול לראש ההר","צחצוח שיניים כל לילה"],"correct":2,"dodge":false,"dodgeIndex":-1},{"images":["photos\\pic_6.JPEG","photos\\pic_7.JPEG","photos\\pic_8.JPEG"],"question":"הטירמיסו הכי טעים שאכלנו:","options":["באיטליה, בעיר שממנה יצאנו לשיט","בירושלים","שלך❤ "],"correct":0,"dodge":false,"dodgeIndex":-1},{"images":["photos\\pic_9.JPEG","photos\\pic_10.JPEG","photos\\pic_11.JPEG"],"question":"כמה מירו השתתף איתי בעלויות הטבעת?","options":["25%","50%"," לא אכל אותה שכשנתתי לו לראות "],"correct":2,"dodge":false,"dodgeIndex":-1},{"images":["photos\\pic_12.JPEG","photos\\pic_13.JPEG"],"question":"מי קם מהשעונים המעוררים שלך?","options":["אני","מירו","את","תשובות 1 ו2 נכונות"],"correct":3,"dodge":false,"dodgeIndex":-1}];
 const SHUFFLE_OPTIONS = false;
 
 let current = 0;
