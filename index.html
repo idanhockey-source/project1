@@ -1,246 +1,568 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>סהמשימה של מירוסלב</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>חידון האהבה שלנו</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#0b1026;
+    --navy-mid:#141b3a;
+    --gold:#d4af37;
+    --gold-soft:#e8cf82;
+    --blush:#f0b8c2;
+    --cream:#f6f1e6;
+    --lavender:#8d87c9;
+    --star-dim:rgba(246,241,230,.35);
+  }
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #fff1f5, #fffaf0);
-      color: #222;
-      text-align: center;
-    }
+  *{box-sizing:border-box; margin:0; padding:0;}
 
-    .screen {
-      display: none;
-      min-height: 100vh;
-      padding: 30px 20px;
-      box-sizing: border-box;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
+  html,body{
+    height:100%;
+    background:var(--navy-deep);
+    color:var(--cream);
+    font-family:'Heebo', sans-serif;
+    overflow-x:hidden;
+  }
 
-    .screen.active {
-      display: flex;
-    }
+  body{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:24px;
+    position:relative;
+  }
 
-    .card {
-      background: white;
-      border-radius: 24px;
-      padding: 25px;
-      max-width: 430px;
-      width: 100%;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-    }
+  /* ===== Starfield background ===== */
+  #stars{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    background:
+      radial-gradient(ellipse at 20% 10%, rgba(141,135,201,.15), transparent 55%),
+      radial-gradient(ellipse at 80% 85%, rgba(212,175,55,.10), transparent 55%),
+      var(--navy-deep);
+  }
+  .star{
+    position:absolute;
+    background:var(--cream);
+    border-radius:50%;
+    opacity:.6;
+    animation:twinkle 4s ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{opacity:.15; transform:scale(.8);}
+    50%{opacity:.9; transform:scale(1.15);}
+  }
 
-    h1, h2 {
-      color: #c9184a;
-    }
+  /* ===== Shell / card ===== */
+  .shell{
+    position:relative;
+    z-index:2;
+    width:100%;
+    max-width:560px;
+  }
 
-    img {
-      max-width: 100%;
-      border-radius: 18px;
-      margin: 15px 0;
-    }
+  .eyebrow{
+    text-align:center;
+    font-size:13px;
+    letter-spacing:.18em;
+    color:var(--gold-soft);
+    text-transform:uppercase;
+    margin-bottom:10px;
+    font-weight:500;
+  }
 
-    button {
-      display: block;
-      width: 100%;
-      margin: 12px 0;
-      padding: 15px;
-      font-size: 18px;
-      border: none;
-      border-radius: 14px;
-      background: #c9184a;
-      color: white;
-      cursor: pointer;
-    }
+  .titles{
+    text-align:center;
+    margin-bottom:28px;
+  }
+  .titles h1{
+    font-family:'Frank Ruhl Libre', serif;
+    font-weight:700;
+    font-size:clamp(28px, 6vw, 40px);
+    color:var(--cream);
+    line-height:1.25;
+  }
 
-    button.secondary {
-      background: #f8bbd0;
-      color: #222;
-    }
+  /* ===== Constellation progress trail ===== */
+  .trail-wrap{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    margin-bottom:34px;
+  }
+  .trail-dot{
+    width:11px;
+    height:11px;
+    border-radius:50%;
+    background:rgba(246,241,230,.18);
+    border:1px solid rgba(212,175,55,.35);
+    transition:all .5s ease;
+    position:relative;
+  }
+  .trail-dot.done{
+    background:var(--gold);
+    box-shadow:0 0 10px 2px rgba(212,175,55,.6);
+  }
+  .trail-dot.current{
+    background:var(--blush);
+    box-shadow:0 0 12px 3px rgba(240,184,194,.55);
+    transform:scale(1.25);
+  }
+  .trail-line{
+    width:20px;
+    height:1px;
+    background:rgba(212,175,55,.25);
+  }
+  .trail-line.done{ background:var(--gold); }
 
-    input {
-      width: 100%;
-      padding: 14px;
-      font-size: 18px;
-      border-radius: 12px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-      text-align: center;
-      margin-top: 10px;
-    }
+  /* ===== Card ===== */
+  .card{
+    background:linear-gradient(180deg, rgba(20,27,58,.9), rgba(11,16,38,.9));
+    border:1px solid rgba(212,175,55,.25);
+    border-radius:18px;
+    padding:34px 30px;
+    backdrop-filter:blur(6px);
+    box-shadow:0 20px 60px rgba(0,0,0,.45);
+    animation:fadeUp .6s ease;
+  }
+  @keyframes fadeUp{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+  }
 
-    .small {
-      font-size: 14px;
-      color: #666;
-    }
+  .q-image{
+    width:100%;
+    max-height:260px;
+    object-fit:cover;
+    border-radius:12px;
+    margin-bottom:20px;
+    border:1px solid rgba(212,175,55,.3);
+    display:none;
+  }
+  .q-image.show{ display:block; }
 
-    .error {
-      color: #c9184a;
-      font-weight: bold;
-    }
+  .q-label{
+    font-size:12px;
+    letter-spacing:.14em;
+    color:var(--lavender);
+    text-transform:uppercase;
+    margin-bottom:8px;
+  }
 
-    .final {
-      font-size: 42px;
-      color: #c9184a;
-      animation: pop 1s ease;
-    }
+  .q-text{
+    font-family:'Frank Ruhl Libre', serif;
+    font-size:clamp(20px,4.4vw,25px);
+    line-height:1.5;
+    margin-bottom:24px;
+    color:var(--cream);
+  }
 
-    @keyframes pop {
-      from { transform: scale(0.7); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-  </style>
+  .options{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+
+  .opt-btn{
+    text-align:right;
+    background:rgba(246,241,230,.04);
+    border:1px solid rgba(246,241,230,.18);
+    color:var(--cream);
+    font-family:'Heebo', sans-serif;
+    font-size:16px;
+    font-weight:400;
+    padding:14px 18px;
+    border-radius:11px;
+    cursor:pointer;
+    transition:all .25s ease;
+  }
+  .opt-btn:hover{
+    border-color:var(--gold);
+    background:rgba(212,175,55,.08);
+    transform:translateX(-3px);
+  }
+  .opt-btn.correct{
+    background:rgba(212,175,55,.18);
+    border-color:var(--gold);
+    color:var(--gold-soft);
+  }
+  .opt-btn.wrong{
+    background:rgba(240,120,120,.12);
+    border-color:rgba(240,120,120,.5);
+  }
+  .opt-btn:disabled{ cursor:default; }
+
+  .feedback{
+    margin-top:16px;
+    font-size:14px;
+    color:var(--gold-soft);
+    min-height:20px;
+    text-align:center;
+  }
+
+  .next-btn{
+    display:none;
+    margin:22px auto 0;
+    background:var(--gold);
+    color:var(--navy-deep);
+    border:none;
+    padding:12px 34px;
+    border-radius:30px;
+    font-family:'Heebo', sans-serif;
+    font-weight:600;
+    font-size:15px;
+    cursor:pointer;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .next-btn:hover{ transform:translateY(-2px); box-shadow:0 8px 20px rgba(212,175,55,.35); }
+  .next-btn.show{ display:block; }
+
+  /* ===== Intro & Final screens ===== */
+  .center-panel{ text-align:center; }
+  .center-panel p{
+    font-size:16px;
+    line-height:1.7;
+    color:rgba(246,241,230,.8);
+    margin-bottom:26px;
+  }
+  .start-btn, .go-btn{
+    background:var(--gold);
+    color:var(--navy-deep);
+    border:none;
+    padding:15px 42px;
+    border-radius:32px;
+    font-family:'Heebo', sans-serif;
+    font-weight:600;
+    font-size:16px;
+    cursor:pointer;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .start-btn:hover, .go-btn:hover{ transform:translateY(-2px); box-shadow:0 10px 26px rgba(212,175,55,.4); }
+
+  .final-heart{
+    font-size:52px;
+    margin-bottom:18px;
+    animation:pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ transform:scale(1); }
+    50%{ transform:scale(1.12); }
+  }
+
+  .final-title{
+    font-family:'Frank Ruhl Libre', serif;
+    font-size:clamp(30px,7vw,44px);
+    font-weight:900;
+    color:var(--gold-soft);
+    margin-bottom:14px;
+    line-height:1.3;
+  }
+
+  .yn-wrap{
+    display:flex;
+    gap:16px;
+    justify-content:center;
+    margin-top:30px;
+    position:relative;
+    min-height:60px;
+    flex-wrap:wrap;
+  }
+  .yes-btn{
+    background:var(--gold);
+    color:var(--navy-deep);
+    border:none;
+    padding:16px 40px;
+    border-radius:32px;
+    font-weight:700;
+    font-size:18px;
+    cursor:pointer;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .yes-btn:hover{ transform:scale(1.06); box-shadow:0 10px 26px rgba(212,175,55,.45); }
+  .no-btn{
+    background:transparent;
+    color:rgba(246,241,230,.6);
+    border:1px solid rgba(246,241,230,.3);
+    padding:16px 40px;
+    border-radius:32px;
+    font-weight:400;
+    font-size:16px;
+    cursor:pointer;
+    position:relative;
+    transition:transform .15s ease;
+  }
+
+  .yes-screen{ display:none; }
+  .yes-screen.show{ display:block; }
+
+  .confetti-piece{
+    position:fixed;
+    top:-20px;
+    z-index:5;
+    border-radius:2px;
+    pointer-events:none;
+  }
+
+  @media (max-width:420px){
+    .card{ padding:26px 20px; }
+    .yn-wrap{ flex-direction:column; align-items:center; }
+  }
+</style>
 </head>
-
 <body>
 
-  <!-- מסך פתיחה -->
-  <div class="screen active" id="screen1">
-    <div class="card">
-      <h1>שלום אמא 🐶</h1>
-      <img src="images/miro.jpg" alt="מירו">
-      <p>אבא ביקש ממני להעביר לך משימה חשובה מאוד.</p>
-      <p class="small">רמז: כדאי לשתף פעולה.</p>
-      <button onclick="goTo('screen2')">אני מוכנה</button>
+<div id="stars"></div>
+
+<div class="shell">
+
+  <!-- ===== INTRO SCREEN ===== -->
+  <div id="screen-intro">
+    <div class="eyebrow">חידון קטן, לפני שאלה גדולה</div>
+    <div class="titles"><h1>בואי נראה כמה את מכירה אותנו 💫</h1></div>
+    <div class="card center-panel">
+      <p>כמה שאלות קטנות, כמה זיכרונות שלנו... ובסוף מחכה לך משהו.<br>מוכנה?</p>
+      <button class="start-btn" onclick="startQuiz()">בואי נתחיל</button>
     </div>
   </div>
 
-  <!-- שאלת בחירה -->
-  <div class="screen" id="screen2">
+  <!-- ===== QUIZ SCREEN ===== -->
+  <div id="screen-quiz" style="display:none;">
+    <div class="trail-wrap" id="trail"></div>
     <div class="card">
-      <h2>שאלה ראשונה</h2>
-      <p>מי הכי מתרגש עכשיו?</p>
-
-      <button onclick="answerQuestion('נכון ברור שמירו')">מירו</button>
-      <button onclick="answerQuestion('גם נכון 😄')">את</button>
-      <button onclick="answerQuestion('הכי נכון ❤️')">אבא</button>
-
-      <p id="answerText"></p>
-      <button id="nextAfterQuestion" style="display:none" onclick="goTo('screen3')">
-        המשך
-      </button>
+      <img id="q-image" class="q-image" src="" alt="">
+      <div class="q-label" id="q-label">שאלה</div>
+      <div class="q-text" id="q-text"></div>
+      <div class="options" id="q-options"></div>
+      <div class="feedback" id="q-feedback"></div>
+      <button class="next-btn" id="next-btn" onclick="nextQuestion()">השאלה הבאה</button>
     </div>
   </div>
 
-  <!-- מסך תמונה/זיכרון -->
-  <div class="screen" id="screen3">
-    <div class="card">
-      <h2>זיכרון קטן</h2>
-      <img src="images/photo1.jpg" alt="תמונה שלנו">
-      <p>
-        כאן תכתוב משהו אישי על תמונה שלכם.
-        למשל: "אחד הימים שהבנתי כמה כיף לי איתך."
-      </p>
-      <button onclick="goTo('screen4')">המשך למשימה הבאה</button>
+  <!-- ===== FINAL SCREEN ===== -->
+  <div id="screen-final" style="display:none;">
+    <div class="card center-panel">
+      <div id="final-question">
+        <div class="final-heart">💍</div>
+        <div class="final-title">ענת... עברת את החידון בהצטיינות.<br>נשארה רק שאלה אחת.</div>
+        <p>רציתי לשאול אותך משהו, ולא בתור חידה הפעם.</p>
+        <div class="final-title" style="font-size:clamp(24px,5.5vw,32px)">תתחתני איתי?</div>
+        <div class="yn-wrap">
+          <button class="yes-btn" onclick="sayYes()">כן! 💖</button>
+          <button class="no-btn" id="no-btn">לא</button>
+        </div>
+      </div>
+      <div class="yes-screen" id="yes-screen">
+        <div class="final-heart">🎉</div>
+        <div class="final-title">ידעתי שתגידי כן.<br>אני אוהב אותך.</div>
+        <p>עכשיו בואי הנה, יש לי טבעת בשבילך.</p>
+      </div>
     </div>
   </div>
 
-  <!-- חידה פיזית בבית -->
-  <div class="screen" id="screen4">
-    <div class="card">
-      <h2>משימה בבית</h2>
-      <p>לכי למקום שבו אנחנו מתחילים כמעט כל בוקר.</p>
-      <p style="font-size:40px;">☕</p>
-      <p class="small">שם יחכה לך קוד קטן.</p>
-      <button onclick="goTo('screen5')">מצאתי את הקוד</button>
-    </div>
-  </div>
+</div>
 
-  <!-- הכנסת קוד -->
-  <div class="screen" id="screen5">
-    <div class="card">
-      <h2>הכניסי את הקוד</h2>
-      <p>הקוד שחיכָה לך ליד הקפה:</p>
+<script>
+/* ============================================================
+   איך להוסיף/לערוך שאלות
+   ------------------------------------------------------------
+   כל שאלה היא אובייקט ברשימה QUESTIONS למטה:
+   {
+     image: "כתובת URL לתמונה (אופציונלי - אפשר למחוק את השורה)",
+     text: "טקסט השאלה / החידה",
+     options: ["תשובה א", "תשובה ב", "תשובה ג"],
+     correct: 0   // האינדקס (0,1,2...) של התשובה הנכונה במערך options
+   }
+   אפשר להוסיף כמה שאלות שרוצים, פשוט להוסיף עוד אובייקטים לרשימה.
+   אם אין תמונה לשאלה מסוימת - פשוט למחוק את השורה image לגמרי.
+   ============================================================ */
 
-      <input id="secretCode" placeholder="הכניסי קוד כאן">
+const QUESTIONS = [
+  {
+    image: "",
+    text: "באיזו עיר היה הדייט הראשון שלנו?",
+    options: ["תל אביב", "ירושלים", "חיפה"],
+    correct: 0
+  },
+  {
+    image: "",
+    text: "מה השיר שרץ לנו ברקע בטיול האחרון?",
+    options: ["שיר א׳", "שיר ב׳", "שיר ג׳"],
+    correct: 1
+  },
+  {
+    image: "",
+    text: "כמה זמן אנחנו יחד (בערך, בשנים)?",
+    options: ["שנה", "שנתיים", "שלוש ויותר"],
+    correct: 2
+  }
+];
 
-      <button onclick="checkCode()">בדיקה</button>
+let current = 0;
+let score = 0;
 
-      <p id="codeError" class="error"></p>
-
-      <p class="small">כרגע הקוד הוא: 2711. אפשר לשנות אותו בקוד.</p>
-    </div>
-  </div>
-
-  <!-- עוד שאלה -->
-  <div class="screen" id="screen6">
-    <div class="card">
-      <h2>עוד שאלה חשובה</h2>
-      <p>מה מירו היה מבקש עכשיו?</p>
-
-      <button onclick="goTo('screen7')">חטיף</button>
-      <button onclick="goTo('screen7')">עוד חטיף</button>
-      <button onclick="goTo('screen7')">את כל החטיפים בבית</button>
-    </div>
-  </div>
-
-  <!-- סרטון -->
-  <div class="screen" id="screen7">
-    <div class="card">
-      <h2>מסר קטן ממני</h2>
-
-      <!-- שים קובץ video.mp4 בתוך תיקיית videos -->
-      <video controls width="100%">
-        <source src="videos/video.mp4" type="video/mp4">
-        הדפדפן לא תומך בסרטון.
-      </video>
-
-      <button onclick="goTo('screen8')">המשך</button>
-    </div>
-  </div>
-
-  <!-- מסך לפני הסיום -->
-  <div class="screen" id="screen8">
-    <div class="card">
-      <h2>כמעט סיימנו</h2>
-      <p>
-        בית זה לא מקום.
-        <br><br>
-        בית זה האדם שחוזרים אליו.
-      </p>
-      <button onclick="goTo('screen9')">המשך</button>
-    </div>
-  </div>
-
-  <!-- מסך סיום -->
-  <div class="screen" id="screen9">
-    <div class="card">
-      <h1 class="final">התנשאי לי? ❤️</h1>
-      <img src="images/final.jpg" alt="תמונה אחרונה">
-    </div>
-  </div>
-
-  <script>
-    function goTo(screenId) {
-      const screens = document.querySelectorAll('.screen');
-      screens.forEach(screen => screen.classList.remove('active'));
-      document.getElementById(screenId).classList.add('active');
-      window.scrollTo(0, 0);
+function buildTrail(){
+  const trail = document.getElementById('trail');
+  trail.innerHTML = '';
+  QUESTIONS.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'trail-dot';
+    dot.id = 'dot-' + i;
+    trail.appendChild(dot);
+    if(i < QUESTIONS.length - 1){
+      const line = document.createElement('div');
+      line.className = 'trail-line';
+      line.id = 'line-' + i;
+      trail.appendChild(line);
     }
+  });
+}
 
-    function answerQuestion(text) {
-      document.getElementById('answerText').innerText = text;
-      document.getElementById('nextAfterQuestion').style.display = 'block';
+function updateTrail(){
+  QUESTIONS.forEach((_, i) => {
+    const dot = document.getElementById('dot-' + i);
+    dot.classList.remove('done','current');
+    if(i < current) dot.classList.add('done');
+    else if(i === current) dot.classList.add('current');
+    if(i < QUESTIONS.length - 1){
+      const line = document.getElementById('line-' + i);
+      line.classList.toggle('done', i < current);
     }
+  });
+}
 
-    function checkCode() {
-      const correctCode = "2711"; // שנה כאן את הקוד
-      const userCode = document.getElementById('secretCode').value.trim();
+function startQuiz(){
+  document.getElementById('screen-intro').style.display = 'none';
+  document.getElementById('screen-quiz').style.display = 'block';
+  buildTrail();
+  renderQuestion();
+}
 
-      if (userCode === correctCode) {
-        goTo('screen6');
-      } else {
-        document.getElementById('codeError').innerText = "לא בדיוק... נסי שוב 😄";
-      }
-    }
-  </script>
+function renderQuestion(){
+  updateTrail();
+  const q = QUESTIONS[current];
+  document.getElementById('q-label').textContent = 'שאלה ' + (current+1) + ' מתוך ' + QUESTIONS.length;
+  document.getElementById('q-text').textContent = q.text;
+  document.getElementById('q-feedback').textContent = '';
+  document.getElementById('next-btn').classList.remove('show');
 
+  const img = document.getElementById('q-image');
+  if(q.image){
+    img.src = q.image;
+    img.classList.add('show');
+  } else {
+    img.classList.remove('show');
+  }
+
+  const optWrap = document.getElementById('q-options');
+  optWrap.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(i, btn);
+    optWrap.appendChild(btn);
+  });
+}
+
+function selectAnswer(i, btn){
+  const q = QUESTIONS[current];
+  const buttons = document.querySelectorAll('#q-options .opt-btn');
+  buttons.forEach(b => b.disabled = true);
+
+  if(i === q.correct){
+    btn.classList.add('correct');
+    document.getElementById('q-feedback').textContent = 'נכון! 💛';
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    buttons[q.correct].classList.add('correct');
+    document.getElementById('q-feedback').textContent = 'לא בדיוק, אבל את עדיין הכי טובה שיש 😉';
+  }
+  document.getElementById('next-btn').classList.add('show');
+}
+
+function nextQuestion(){
+  current++;
+  if(current >= QUESTIONS.length){
+    document.getElementById('screen-quiz').style.display = 'none';
+    document.getElementById('screen-final').style.display = 'block';
+  } else {
+    renderQuestion();
+  }
+}
+
+/* ===== "No" button runs away ===== */
+const noBtn = document.getElementById('no-btn');
+function moveNoButton(){
+  const wrap = noBtn.closest('.yn-wrap');
+  const wrapRect = wrap.getBoundingClientRect();
+  const maxX = Math.max(wrapRect.width - noBtn.offsetWidth, 40);
+  const maxY = 120;
+  const x = (Math.random() - 0.5) * maxX;
+  const y = (Math.random() - 0.5) * maxY;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
+noBtn.addEventListener('mouseenter', moveNoButton);
+noBtn.addEventListener('click', (e) => { e.preventDefault(); moveNoButton(); });
+noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveNoButton(); });
+
+function sayYes(){
+  document.getElementById('final-question').style.display = 'none';
+  document.getElementById('yes-screen').classList.add('show');
+  launchConfetti();
+}
+
+function launchConfetti(){
+  const colors = ['#d4af37', '#f0b8c2', '#f6f1e6', '#8d87c9'];
+  for(let i = 0; i < 80; i++){
+    setTimeout(() => {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      const size = 6 + Math.random() * 6;
+      piece.style.width = size + 'px';
+      piece.style.height = size * 0.4 + 'px';
+      piece.style.left = Math.random() * 100 + 'vw';
+      piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+      piece.style.animation = `fall ${2.5 + Math.random()*2}s linear forwards`;
+      piece.style.transform = `rotate(${Math.random()*360}deg)`;
+      document.body.appendChild(piece);
+      setTimeout(() => piece.remove(), 5000);
+    }, i * 30);
+  }
+}
+
+const fallKeyframes = `@keyframes fall{
+  to{ transform: translateY(105vh) rotate(720deg); opacity:.9; }
+}`;
+const styleTag = document.createElement('style');
+styleTag.textContent = fallKeyframes;
+document.head.appendChild(styleTag);
+
+/* ===== Starfield generation ===== */
+function buildStars(){
+  const container = document.getElementById('stars');
+  const count = 90;
+  for(let i = 0; i < count; i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2 + 1;
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.top = Math.random() * 100 + 'vh';
+    s.style.animationDelay = (Math.random() * 4) + 's';
+    s.style.animationDuration = (3 + Math.random() * 3) + 's';
+    container.appendChild(s);
+  }
+}
+buildStars();
+</script>
 </body>
 </html>
