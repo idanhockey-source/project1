@@ -146,7 +146,7 @@
 <button class="music-btn" id="music-btn" title="השיר שלנו">🎵</button>
 
 <script>
-const QUESTIONS = [{"images":["photos\\pic_1.JPEG","photos\\pic_2.JPEG"],"question":"מה היה תאריך הנשיקה הראשונה?","options":["28/11/24","30/11/24","01/12/24"],"correct":2,"dodge":false,"dodgeIndex":-1},{"images":["photos\\pic_3.JPEG","photos\\pic_4.JPEG","photos\\pic_5.JPEG"],"question":"מה המסע הכי קשה שהעברתי אותך?","options":["שיט 13 שעות","טיול לראש ההר","צחצוח שיניים כל לילה"],"correct":2,"dodge":false,"dodgeIndex":-1},{"images":["photos\\pic_6.JPEG","photos\\pic_7.JPEG","photos\\pic_8.JPEG"],"question":"הטירמיסו הכי טעים שאכלנו:","options":["באיטליה, בעיר שממנה יצאנו לשיט","בירושלים","שלך❤ "],"correct":0,"dodge":false,"dodgeIndex":-1},{"images":["photos\\pic_9.JPEG","photos\\pic_10.JPEG","photos\\pic_11.JPEG"],"question":"כמה מירו השתתף איתי בעלויות הטבעת?","options":["25%","50%"," לא אכל אותה שכשנתתי לו לראות "],"correct":2,"dodge":false,"dodgeIndex":-1},{"images":["photos\\pic_12.JPEG","photos\\pic_13.JPEG"],"question":"מי קם מהשעונים המעוררים שלך?","options":["אני","מירו","את","תשובות 1 ו2 נכונות"],"correct":3,"dodge":false,"dodgeIndex":-1}];
+const QUESTIONS = [{"images":["https://github.com/idanhockey-source/project1/tree/main/photos/pic_1.JPEG","photos\\pic_2.JPEG"],"question":"מה היה תאריך הנשיקה הראשונה?","options":["28/11/24","30/11/24","01/12/24"],"correct":2,"dodge":false,"dodgeIndex":-1},{"images":["photos\\pic_3.JPEG","photos\\pic_4.JPEG","photos\\pic_5.JPEG"],"question":"מה המסע הכי קשה שהעברתי אותך?","options":["שיט 13 שעות","טיול לראש ההר","צחצוח שיניים כל לילה"],"correct":2,"dodge":false,"dodgeIndex":-1},{"images":["photos\\pic_6.JPEG","photos\\pic_7.JPEG","photos\\pic_8.JPEG"],"question":"הטירמיסו הכי טעים שאכלנו:","options":["באיטליה, בעיר שממנה יצאנו לשיט","בירושלים","שלך❤ "],"correct":0,"dodge":false,"dodgeIndex":-1},{"images":["photos\\pic_9.JPEG","photos\\pic_10.JPEG","photos\\pic_11.JPEG"],"question":"כמה מירו השתתף איתי בעלויות הטבעת?","options":["25%","50%"," לא אכל אותה שכשנתתי לו לראות "],"correct":2,"dodge":false,"dodgeIndex":-1},{"images":["photos\\pic_12.JPEG","photos\\pic_13.JPEG"],"question":"מי קם מהשעונים המעוררים שלך?","options":["אני","מירו","את","תשובות 1 ו2 נכונות"],"correct":3,"dodge":false,"dodgeIndex":-1}];
 const SHUFFLE_OPTIONS = false;
 
 let current = 0;
@@ -382,10 +382,4 @@ function buildStars(){
     s.style.top = (Math.random() * 100) + "vh";
     s.style.animationDelay = (Math.random() * 4) + "s";
     s.style.animationDuration = (3 + Math.random() * 3) + "s";
-    container.appendChild(s);
-  }
-}
-buildStars();
-</script>
-</body>
-</html>
+    container.append
